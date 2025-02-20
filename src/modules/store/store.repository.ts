@@ -13,4 +13,20 @@ export class StoreRepository {
   async create(store: CreateSaleDto): Promise<Store> {
     return this.storeModel.create(store);
   }
+
+  async findAll(): Promise<Store[]> {
+    return await this.storeModel.find();
+  }
+
+  async findOne(id: string): Promise<Store> {
+    return await this.storeModel.findById(id);
+  }
+
+  async update(id: string, store: Partial<Store>): Promise<Store> {
+    return await this.storeModel.findByIdAndUpdate(id, store, { new: true });
+  }
+
+  async disable(id: string) {
+    return await this.storeModel.updateOne({ _id: id }, { enabled: false });
+  }
 }
