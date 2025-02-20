@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { environment } from './environment/environment';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { StoreModule } from './modules/store/store.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
       envFilePath: '.env',
     }),
+    StoreModule,
   ],
   controllers: [AppController],
   providers: [AppService],

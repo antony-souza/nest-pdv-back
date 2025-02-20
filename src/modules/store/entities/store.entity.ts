@@ -9,6 +9,9 @@ export class Store {
   @Prop({ type: String, required: true })
   name: string;
 
+  @Prop({ type: String, required: false })
+  imgUrl?: string;
+
   @Prop({ type: String, required: true })
   address: string;
 
