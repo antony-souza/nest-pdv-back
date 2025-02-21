@@ -5,6 +5,7 @@ import { environment } from './environment/environment';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { StoreModule } from './modules/store/store.module';
+import { PdvModule } from './modules/pdv/pdv.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { StoreModule } from './modules/store/store.module';
       envFilePath: '.env',
     }),
     StoreModule,
+    PdvModule,
   ],
   controllers: [AppController],
   providers: [AppService],

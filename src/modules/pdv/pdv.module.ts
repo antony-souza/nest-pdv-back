@@ -4,6 +4,7 @@ import { PdvController } from './pdv.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Store, StoreSchema } from '../store/entities/store.entity';
 import { Pdv, PdvSchema } from './entities/pdv.entity';
+import { PdvRepository } from './pdv.repository';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { Pdv, PdvSchema } from './entities/pdv.entity';
     MongooseModule.forFeature([{ name: Pdv.name, schema: PdvSchema }]),
   ],
   controllers: [PdvController],
-  providers: [PdvService],
+  providers: [PdvService, PdvRepository],
 })
 export class PdvModule {}

@@ -1,26 +1,35 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePdvDto } from './dto/create-pdv.dto';
+import { PdvRepository } from './pdv.repository';
 import { UpdatePdvDto } from './dto/update-pdv.dto';
 
 @Injectable()
 export class PdvService {
-  create(createPdvDto: CreatePdvDto) {
-    return 'This action adds a new pdv';
+  constructor(private readonly pdvRepository: PdvRepository) {}
+
+  async create(createPdvDto: CreatePdvDto) {
+    const pdv = await this.pdvRepository.create(createPdvDto);
+
+    if (!pdv) {
+      throw new BadRequestException('Error on create pdv');
+    }
+
+    return pdv;
   }
 
-  findAll() {
-    return `This action returns all pdv`;
+  async findAll() {
+    return await this.pdvRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pdv`;
+  async findOne(id: string) {
+    return await this.pdvRepository.findOne(id);
   }
 
-  update(id: number, updatePdvDto: UpdatePdvDto) {
-    return `This action updates a #${id} pdv`;
+  async update(id: string, data: UpdatePdvDto) {
+    return await this.pdvRepository.update(id, data);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pdv`;
+  async disable(id: string) {
+    return await this.pdvRepository.disable(id);
   }
 }
