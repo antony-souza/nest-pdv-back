@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { StoreModule } from './modules/store/store.module';
 import { PdvModule } from './modules/pdv/pdv.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PdvModule } from './modules/pdv/pdv.module';
     }),
     StoreModule,
     PdvModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

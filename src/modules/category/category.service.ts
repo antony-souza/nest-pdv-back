@@ -1,26 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoryRepository } from './category.repository';
+import UploadFileFactoryService from 'src/utils/uploads/upload-file.service';
 
 @Injectable()
 export class CategoryService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
-  }
+  constructor(
+    private readonly categoryRepository: CategoryRepository,
+    private readonly uploadImg: UploadFileFactoryService,
+  ) {}
+  async create(createCategoryDto: CreateCategoryDto) {
+    let imgUrl = '';
 
-  findAll() {
-    return `This action returns all category`;
-  }
+    if (createCategoryDto.imgUrl) {
+      imgUrl = await this.uploadImg.upload(createCategoryDto.imgUrl);
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
-  }
+    const category = await this.categoryRepository.create({
+      ...createCategoryDto,
+      imgUrl: imgUrl,
+    });
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
-  }
+    if (!category) {
+      throw new BadRequestException('Category not created');
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+    return category;
   }
 }
