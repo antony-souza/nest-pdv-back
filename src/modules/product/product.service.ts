@@ -1,26 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductRepository } from './product.repository';
+import UploadFileFactoryService from 'src/utils/uploads/upload-file.service';
 
 @Injectable()
 export class ProductService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
-  }
+  constructor(
+    private readonly productRepository: ProductRepository,
+    private readonly uploadImg: UploadFileFactoryService,
+  ) {}
+  async create(createProductDto: CreateProductDto) {
+    let imgUrl = '';
 
-  findAll() {
-    return `This action returns all product`;
-  }
+    if (createProductDto.imgUrl) {
+      imgUrl = await this.uploadImg.upload(createProductDto.imgUrl);
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
-  }
+    const product = this.productRepository.create({
+      ...createProductDto,
+      imgUrl: imgUrl,
+    });
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
-  }
+    if (!product) {
+      throw new BadRequestException('Error on create product');
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+    return product;
   }
 }

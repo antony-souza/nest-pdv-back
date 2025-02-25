@@ -24,6 +24,9 @@ export class Product {
   @Prop({ type: String, required: true, ref: 'Category' })
   categoryId: string;
 
+  @Prop({ type: String, required: false })
+  categoryName?: string;
+
   @Prop({ type: String, required: true, ref: 'Store' })
   storeId: string;
 

@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { StoreModule } from './modules/store/store.module';
 import { PdvModule } from './modules/pdv/pdv.module';
 import { CategoryModule } from './modules/category/category.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { CategoryModule } from './modules/category/category.module';
     StoreModule,
     PdvModule,
     CategoryModule,
+    ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
