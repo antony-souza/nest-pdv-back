@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { PaymentRepository } from './payment.repository';
+
 @Injectable()
 export class PaymentService {
   constructor(private readonly paymentRepository: PaymentRepository) {}
@@ -14,5 +15,9 @@ export class PaymentService {
     }
 
     return payment;
+  }
+
+  async findByStatusPayments(status: string) {
+    return await this.paymentRepository.findByStatusPayments(status);
   }
 }

@@ -6,7 +6,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { PaymentMethods, PaymentStatus } from 'src/interfaces/payments';
+import { IPaymentMethods, IPaymentStatus } from 'src/interfaces/payments';
 
 export class CreatePaymentDto {
   @IsOptional()
@@ -50,13 +50,13 @@ export class CreatePaymentDto {
   @Transform(({ value }) => parseInt(value))
   quantity: number;
 
-  @IsEnum(PaymentMethods)
+  @IsEnum(IPaymentMethods)
   @IsOptional()
-  paymentMethod?: PaymentMethods;
+  paymentMethod?: IPaymentMethods;
 
-  @IsEnum(PaymentStatus)
+  @IsEnum(IPaymentStatus)
   @IsOptional()
-  status?: PaymentStatus;
+  status?: IPaymentStatus;
 
   @IsBoolean()
   @IsOptional()

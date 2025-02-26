@@ -1,7 +1,15 @@
-import { Controller, Post, Body, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseInterceptors,
+  Get,
+  Param,
+} from '@nestjs/common';
 import { PaymentService } from './payment.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdatePaymentDto } from './dto/update-payment.dto';
 
 @Controller('/payment')
 export class PaymentController {
@@ -11,5 +19,10 @@ export class PaymentController {
   @UseInterceptors(FileInterceptor(''))
   create(@Body() createPaymentDto: CreatePaymentDto) {
     return this.paymentService.startingPayment(createPaymentDto);
+  }
+
+  @Get('/findByStatusPayments/:status')
+  findByStatusPayments(@Param('status') status: string) {
+    return this.paymentService.findByStatusPayments(status);
   }
 }

@@ -37,4 +37,33 @@ export class PaymentRepository {
       pendingValue: product.price * data.quantity,
     });
   }
+
+  async findByStatusPayments(status: string): Promise<Payment[]> {
+    return await this.paymentModel.aggregate([
+      {
+        $match: {
+          status: status,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          storeName: 1,
+          pdvBox: 1,
+          productName: 1,
+          userName: 1,
+          quantity: 1,
+          pendingValue: 1,
+          status: 1,
+          DataHora: {
+            $dateToString: {
+              format: '%d-%m-%Y, %H:%M:%S',
+              timezone: 'America/Sao_Paulo',
+              date: '$createdAt',
+            },
+          },
+        },
+      },
+    ]);
+  }
 }
