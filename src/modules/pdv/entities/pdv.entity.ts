@@ -6,8 +6,8 @@ export class Pdv {
   @Prop({ type: String, default: randomUUID, required: false })
   _id?: string;
 
-  @Prop({ type: Number, required: true })
-  box: number;
+  @Prop({ type: String, required: true })
+  box: string;
 
   @Prop({ type: Boolean, required: false, default: true })
   status?: boolean;

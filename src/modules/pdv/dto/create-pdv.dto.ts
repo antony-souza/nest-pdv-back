@@ -1,14 +1,13 @@
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class CreatePdvDto {
   @IsString()
   @IsOptional()
   _id?: string;
 
-  @IsNumber()
-  @Transform(({ value }) => parseInt(value))
-  box: number;
+  @IsString()
+  box: string;
 
   @IsOptional()
   @IsBoolean()

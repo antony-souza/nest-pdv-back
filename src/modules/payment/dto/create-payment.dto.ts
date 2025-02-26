@@ -1,5 +1,11 @@
 import { Transform } from 'class-transformer';
-import { IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { PaymentMethods, PaymentStatus } from 'src/interfaces/payments';
 
 export class CreatePaymentDto {
@@ -8,34 +14,51 @@ export class CreatePaymentDto {
   _id?: string;
 
   @IsString()
+  productId: string;
+
+  @IsString()
+  @IsOptional()
+  productName?: string;
+
+  @IsString()
   userId: string;
 
   @IsString()
-  userName: string;
+  @IsOptional()
+  userName?: string;
 
   @IsString()
-  storeName: string;
+  @IsOptional()
+  storeName?: string;
 
   @IsString()
   storeId: string;
 
   @IsString()
-  boxId: string;
+  pdvId: string;
 
   @IsString()
-  boxName: string;
+  @IsOptional()
+  pdvBox?: string;
 
   @IsNumber()
+  @IsOptional()
   @Transform(({ value }) => parseFloat(value))
-  total: number;
+  pendingValue?: number;
 
   @IsNumber()
   @Transform(({ value }) => parseInt(value))
   quantity: number;
 
   @IsEnum(PaymentMethods)
-  paymentMethod: PaymentMethods;
+  @IsOptional()
+  paymentMethod?: PaymentMethods;
 
   @IsEnum(PaymentStatus)
-  status: PaymentStatus;
+  @IsOptional()
+  status?: PaymentStatus;
+
+  @IsBoolean()
+  @IsOptional()
+  enabled?: boolean;
 }

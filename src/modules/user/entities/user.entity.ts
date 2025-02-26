@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { randomUUID } from 'crypto';
 
 @Schema({ timestamps: true, versionKey: false })
@@ -31,3 +31,5 @@ export class User {
   @Prop({ type: Boolean, required: false, default: true })
   enabled?: boolean;
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);
