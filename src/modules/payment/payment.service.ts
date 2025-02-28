@@ -6,17 +6,14 @@ import { PaymentRepository } from './payment.repository';
 export class PaymentService {
   constructor(private readonly paymentRepository: PaymentRepository) {}
 
-  /*   async startingPayment(createPaymentDto: CreatePaymentDto) {
-    const payment =
-      await this.paymentRepository.startingPayment(createPaymentDto);
+  async createPayment(dto: CreatePaymentDto) {
+    const payment = await this.paymentRepository.createPayment(dto);
 
     if (!payment) {
-      throw new BadRequestException('Payment not created!');
+      throw new BadRequestException('Error to create payment');
     }
-
-    return payment;
   }
- */
+
   async findByStatusPayments(status: string) {
     return await this.paymentRepository.findByStatusPayments(status);
   }

@@ -1,39 +1,24 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Payment } from './entities/payment.entity';
 import { Model } from 'mongoose';
-import { Store } from '../store/entities/store.entity';
-import { Pdv } from '../pdv/entities/pdv.entity';
-import { Product } from '../product/entities/product.entity';
-import { User } from '../user/entities/user.entity';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CreatePaymentDto } from './dto/create-payment.dto';
 
+@Injectable()
 export class PaymentRepository {
   constructor(
     @InjectModel(Payment.name) private readonly paymentModel: Model<Payment>,
-    @InjectModel(Store.name) private readonly storeModel: Model<Store>,
-    @InjectModel(Pdv.name) private readonly pdvModel: Model<Pdv>,
-    @InjectModel(Product.name) private readonly productModel: Model<Product>,
-    @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  /* async startingPayment(data: Payment): Promise<Payment> {
-    const [store, pdv, user] = await Promise.all([
-      this.storeModel.findById(data.storeId),
-      this.pdvModel.findById(data.pdvId),
-      this.userModel.findById(data.userId),
-    ]);
+  async createPayment(dto: CreatePaymentDto): Promise<Payment> {
+    const payment = await this.paymentModel.create(dto);
 
-    if (!store || !pdv || !user) {
-      throw new BadRequestException('Invalid data');
+    if (!payment) {
+      throw new BadRequestException('Error to create payment');
     }
 
-    return await this.paymentModel.create({
-      ...data,
-      storeName: store.name,
-      pdvBox: pdv.box,
-      userName: user.name,
-    });
-  } */
+    return payment;
+  }
 
   async findByStatusPayments(status: string): Promise<Payment[]> {
     return await this.paymentModel.aggregate([

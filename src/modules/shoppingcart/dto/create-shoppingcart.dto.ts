@@ -29,4 +29,8 @@ export class CreateShoppingcartDto {
 
   @IsOptional()
   enabled?: boolean;
+
+  @IsNumber()
+  @Transform(({ value }) => parseFloat(value))
+  totalShoppingCart: number;
 }

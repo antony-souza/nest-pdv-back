@@ -14,13 +14,11 @@ export class CreatePaymentDto {
   _id?: string;
 
   @IsNumber()
-  @IsOptional()
   @Transform(({ value }) => parseFloat(value))
-  pendingValue?: number;
+  totalValue: number;
 
   @IsEnum(IPaymentMethods)
-  @IsOptional()
-  paymentMethod?: IPaymentMethods;
+  paymentMethod: IPaymentMethods;
 
   @IsEnum(IPaymentStatus)
   @IsOptional()

@@ -8,6 +8,7 @@ import {
 } from './entities/shoppingcart.entity';
 import { ShoppingCartRepository } from './shoppingcart.repository';
 import { Product, ProductSchema } from '../product/entities/product.entity';
+import { PaymentModule } from '../payment/payment.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { Product, ProductSchema } from '../product/entities/product.entity';
       { name: Shoppingcart.name, schema: ShoppingcartSchema },
     ]),
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+    PaymentModule,
   ],
   controllers: [ShoppingcartController],
   providers: [ShoppingcartService, ShoppingCartRepository],

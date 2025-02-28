@@ -7,8 +7,8 @@ export class Payment {
   @Prop({ type: String, required: false, default: randomUUID })
   _id?: string;
 
-  @Prop({ type: Number, required: false })
-  pendingValue?: number;
+  @Prop({ type: Number, required: true })
+  totalValue: number;
 
   @Prop({
     type: String,
@@ -20,11 +20,11 @@ export class Payment {
 
   @Prop({
     type: String,
-    required: false,
+    required: true,
     enum: Object.values(IPaymentMethods),
     default: IPaymentMethods.CASH,
   })
-  paymentMethod?: IPaymentMethods;
+  paymentMethod: IPaymentMethods;
 
   @Prop({ type: Boolean, required: false })
   enabled?: boolean;

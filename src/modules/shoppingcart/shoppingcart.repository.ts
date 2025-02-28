@@ -28,14 +28,19 @@ export class ShoppingCartRepository {
 
         return {
           ...item,
-          totalValue: product.price * item.productQuantity,
+          totalValueProduct: product.price * item.productQuantity,
           productName: product.name,
         };
       }),
     );
 
+    const totalShoppingCart = cartMapItens.reduce((acc, item) => {
+      return acc + item.totalValueProduct;
+    }, 0);
+
     const cart = await this.shoppingCartModel.create({
       itens: cartMapItens,
+      totalShoppingCart: totalShoppingCart,
     });
 
     if (!cart) {

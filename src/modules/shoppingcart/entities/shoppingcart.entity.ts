@@ -12,7 +12,7 @@ export class ItensCart {
   productQuantity: number;
 
   @Prop({ type: Number, required: false })
-  totalValue?: number;
+  totalValueProduct?: number;
 }
 
 @Schema({ versionKey: false, timestamps: true })
@@ -25,6 +25,9 @@ export class Shoppingcart {
 
   @Prop({ type: Boolean, required: false, default: true })
   enabled?: boolean;
+
+  @Prop({ type: Number, required: true })
+  totalShoppingCart: number;
 }
 
 export const ShoppingcartSchema = SchemaFactory.createForClass(Shoppingcart);
