@@ -16,15 +16,14 @@ export class PaymentRepository {
     @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
-  async startingPayment(data: Payment): Promise<Payment> {
-    const [store, pdv, product, user] = await Promise.all([
+  /* async startingPayment(data: Payment): Promise<Payment> {
+    const [store, pdv, user] = await Promise.all([
       this.storeModel.findById(data.storeId),
       this.pdvModel.findById(data.pdvId),
-      this.productModel.findById(data.productId),
       this.userModel.findById(data.userId),
     ]);
 
-    if (!store || !pdv || !product || !user) {
+    if (!store || !pdv || !user) {
       throw new BadRequestException('Invalid data');
     }
 
@@ -32,11 +31,9 @@ export class PaymentRepository {
       ...data,
       storeName: store.name,
       pdvBox: pdv.box,
-      productName: product.name,
       userName: user.name,
-      pendingValue: product.price * data.quantity,
     });
-  }
+  } */
 
   async findByStatusPayments(status: string): Promise<Payment[]> {
     return await this.paymentModel.aggregate([

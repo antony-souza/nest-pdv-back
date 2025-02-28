@@ -6,7 +6,7 @@ import { PaymentRepository } from './payment.repository';
 export class PaymentService {
   constructor(private readonly paymentRepository: PaymentRepository) {}
 
-  async startingPayment(createPaymentDto: CreatePaymentDto) {
+  /*   async startingPayment(createPaymentDto: CreatePaymentDto) {
     const payment =
       await this.paymentRepository.startingPayment(createPaymentDto);
 
@@ -16,7 +16,7 @@ export class PaymentService {
 
     return payment;
   }
-
+ */
   async findByStatusPayments(status: string) {
     return await this.paymentRepository.findByStatusPayments(status);
   }
