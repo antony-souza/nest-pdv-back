@@ -18,35 +18,30 @@ export class ShoppingCartRepository {
   ) {}
 
   async addProductsFromShoppingCart(data: Shoppingcart): Promise<Shoppingcart> {
-    const cartMapItens = await Promise.all(
+    const cartMapItens = await Promise.all([
       data.itens.map(async (item) => {
-        const searchProducts = await this.productModel.findOne({
-          _id: item.productId,
-        });
+        const product = await this.productModel.findById(item.productId);
 
-        if (!searchProducts) {
+        if (!product) {
           throw new NotFoundException('Product not found');
         }
 
         return {
-          productId: item.productId,
-          productName: searchProducts.name,
-          productQuantity: item.productQuantity,
-          totalValue: item.productQuantity * searchProducts.price,
+          ...item,
+          totalValue: product.price * item.productQuantity,
+          productName: product.name,
         };
       }),
-    );
+    ]);
 
-    const addShoppingCart = await this.shoppingCartModel.create({
+    const cart = await this.shoppingCartModel.create({
       itens: cartMapItens,
     });
 
-    if (!addShoppingCart) {
-      throw new BadRequestException(
-        'Error to add products from shopping cart - Repository',
-      );
+    if (!cart) {
+      throw new BadRequestException('Error to add products from shopping cart');
     }
 
-    return addShoppingCart;
+    return cart;
   }
 }
