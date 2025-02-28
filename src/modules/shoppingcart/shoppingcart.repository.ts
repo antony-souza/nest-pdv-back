@@ -18,7 +18,7 @@ export class ShoppingCartRepository {
   ) {}
 
   async addProductsFromShoppingCart(data: Shoppingcart): Promise<Shoppingcart> {
-    const cartMapItens = await Promise.all([
+    const cartMapItens = await Promise.all(
       data.itens.map(async (item) => {
         const product = await this.productModel.findById(item.productId);
 
@@ -32,7 +32,7 @@ export class ShoppingCartRepository {
           productName: product.name,
         };
       }),
-    ]);
+    );
 
     const cart = await this.shoppingCartModel.create({
       itens: cartMapItens,
